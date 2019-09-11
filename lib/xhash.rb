@@ -6,7 +6,7 @@ require 'xhash/identification'
 require 'xhash/proof_of_address'
 require 'xhash/customer'
 
-require 'xhash/store_data'
+require 'xhash/general'
 require 'xhash/ocr'
 
 module Xhash

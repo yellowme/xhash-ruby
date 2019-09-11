@@ -11,21 +11,29 @@ module Xhash
 
       def api_get(url, custom_headers = {})
         headers = custom_headers.merge(default_headers)
-        response =
-          HTTParty.get(
-            Xhash.api_base + url,
-            headers: headers
-          )
+        response = HTTParty.get(Xhash.api_base + url, headers: headers)
 
         JSON.parse(response.body, symbolize_names: true)
       end
 
       def api_post(url, body = {}, custom_headers = {})
         headers = custom_headers.merge(default_headers)
+
         response =
           HTTParty.post(
             Xhash.api_base + url,
             body: body.to_json, headers: headers
+          )
+        JSON.parse(response.body, symbolize_names: true)
+      end
+
+      def api_post_multipart(url, body = {}, custom_headers = {})
+        headers = custom_headers.merge(default_headers)
+
+        response =
+          HTTParty.post(
+            Xhash.api_base + url,
+            mutipart: true, body: body, headers: headers
           )
         JSON.parse(response.body, symbolize_names: true)
       end

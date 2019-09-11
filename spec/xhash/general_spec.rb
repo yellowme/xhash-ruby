@@ -29,14 +29,28 @@ describe Xhash::General do
     end
   end
 
-  describe '.get_customer', focus: true do
+  describe '.get_customer' do
     it 'successfully fetch customer data' do
-      customer = Xhash::General.get_customer(customer_id: "2443-sadf-23s-fsf")
+      customer = Xhash::General.get_customer(customer_id: '2443-sadf-23s-fsf')
 
       expect(customer).to be_a(Xhash::Customer)
       expect(customer.id).to be_truthy
       expect(customer.name).to eq('pedro')
       expect(customer.external_customer_id).to eq('2443-sadf-23s-fsf')
+    end
+  end
+
+  describe '.store_file' do
+    it 'successfully store file to a customer' do
+      document = File.open('spec/files/ife_front.png')
+
+      response =
+        Xhash::General.store_file(
+          customer_id: '2443-sadf-23s-fsf', document_type: 1, document: document
+        )
+
+      document.close
+      expect(response).to be true
     end
   end
 end

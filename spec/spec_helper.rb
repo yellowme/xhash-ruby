@@ -6,9 +6,4 @@ require 'xhash'
 
 SimpleCov.start { add_filter '/spec/' }
 
-RSpec.configure do |config|
-  config.before(:all) do
-    Xhash.api_key =
-      'api_key'
-  end
-end
+RSpec.configure { |config| config.before(:all) { Xhash.api_key = 'api_key' } }
