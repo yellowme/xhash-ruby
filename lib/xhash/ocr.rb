@@ -25,6 +25,30 @@ module Xhash
       document
     end
 
+    def self.identification(document_url:)
+      url = 'ocr/identification'
+      body = { 'document_url' => document_url }
+
+      response = api_post(url, body)
+      payload = response[:payload]
+
+      Xhash::Identification.new(
+        *payload.values_at(*Xhash::Identification.members)
+      )
+    end
+
+    def self.proof_of_address(document_url:)
+      url = 'ocr/proof-of-address'
+      body = { 'document_url' => document_url }
+
+      response = api_post(url, body)
+      payload = response[:payload]
+
+      Xhash::ProofOfAddress.new(
+        *payload.values_at(*Xhash::ProofOfAddress.members)
+      )
+    end
+
     def self.ine_reverse(document_url:)
       url = 'ocr/ine-reverse'
       body = { 'document_url' => document_url }
