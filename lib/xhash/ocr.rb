@@ -4,7 +4,8 @@ module Xhash
       url = 'ocr/ine-reverse'
       body = { 'document_url' => document_url }
 
-      api_post(url, body)
+      response = api_post(url, body)
+      Xhash::Document.new(response['payload'])
     end
   end
 end

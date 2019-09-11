@@ -1,5 +1,7 @@
 require 'xhash/api_client'
 
+require 'xhash/document'
+
 require 'xhash/ocr'
 
 module Xhash
