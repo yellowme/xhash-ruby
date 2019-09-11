@@ -3,14 +3,27 @@ require 'singleton'
 require 'xhash/json_api'
 
 module Xhash
-  class ApiClient < JsonApi
-    include Singleton
+  class ApiClient
+    include Xhash::JsonApi
 
-    attr_reader :api_key, :base_url
+    def self.config
+      yield self
+    end
 
-    def initialize
-      @api_key = Xhash.api_key
-      @base_url = Xhash.base_url
+    def self.api_base
+      @api_base
+    end
+
+    def self.api_base=(api_base)
+      @api_base = api_base
+    end
+
+    def self.api_key
+      @api_key
+    end
+
+    def self.api_key=(api_key)
+      @api_key = api_key
     end
   end
 end

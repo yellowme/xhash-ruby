@@ -4,7 +4,7 @@ module Xhash
       url = 'ocr/ine-reverse'
       body = { 'document_url' => document_url }
 
-      self.api_post(url, body)
+      api_post(url, body)
     end
   end
 end
