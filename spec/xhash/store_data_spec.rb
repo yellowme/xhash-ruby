@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Xhash::General, focus: true do
+describe Xhash::General do
   describe '.store_data' do
     it 'successfully creates a customer' do
       customer =
@@ -21,6 +21,17 @@ describe Xhash::General, focus: true do
           zip_code: '97400',
           external_customer_id: '2443-sadf-23s-fsf'
         )
+
+      expect(customer).to be_a(Xhash::Customer)
+      expect(customer.id).to be_truthy
+      expect(customer.name).to eq('pedro')
+      expect(customer.external_customer_id).to eq('2443-sadf-23s-fsf')
+    end
+  end
+
+  describe '.get_customer', focus: true do
+    it 'successfully fetch customer data' do
+      customer = Xhash::General.get_customer(customer_id: "2443-sadf-23s-fsf")
 
       expect(customer).to be_a(Xhash::Customer)
       expect(customer.id).to be_truthy

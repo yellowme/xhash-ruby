@@ -14,8 +14,9 @@ module Xhash
         response =
           HTTParty.get(
             Xhash.api_base + url,
-            body: body.to_json, headers: headers
+            headers: headers
           )
+
         JSON.parse(response.body, symbolize_names: true)
       end
 
