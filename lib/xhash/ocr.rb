@@ -1,14 +1,28 @@
 module Xhash
   class OCR < ApiClient
+    IDENTIFICATION_TYPES = %w[INE]
+
     def self.generic(document_url:)
       url = 'ocr'
       body = { 'document_url' => document_url }
 
       response = api_post(url, body)
       payload = response[:payload]
-      Xhash::Identification.new(
-        *payload.values_at(*Xhash::Identification.members)
-      )
+
+      is_identification = IDENTIFICATION_TYPES.include? payload[:type]
+
+      document =
+        if is_identification
+          Xhash::Identification.new(
+            *payload.values_at(*Xhash::Identification.members)
+          )
+        else
+          Xhash::ProofOfAddress.new(
+            *payload.values_at(*Xhash::ProofOfAddress.members)
+          )
+        end
+
+      document
     end
 
     def self.ine_reverse(document_url:)

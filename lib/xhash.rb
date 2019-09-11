@@ -3,6 +3,7 @@ require 'json'
 require 'xhash/api_client'
 
 require 'xhash/identification'
+require 'xhash/proof_of_address'
 
 require 'xhash/ocr'
 
