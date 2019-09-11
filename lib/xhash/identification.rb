@@ -1,5 +1,5 @@
 module Xhash
-  Document =
+  Identification =
     Struct.new(
       :lines,
       :cic,
@@ -8,7 +8,6 @@ module Xhash
       :section_and_consecutive,
       :date,
       :date_check_digit,
-      :gender,
       :expiration_date,
       :expiration_date_digit,
       :nationality,
@@ -16,6 +15,16 @@ module Xhash
       :name,
       :mothers_last_name,
       :last_name,
-      :last_names
+      :last_names,
+      :birth_date,
+      :gender,
+      :elector_key,
+      :curp,
+      :street,
+      :neighborhood,
+      :zip_code,
+      :city,
+      :province,
+      :type
     )
 end

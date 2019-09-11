@@ -16,7 +16,7 @@ module Xhash
             Xhash.api_base + url,
             body: body.to_json, headers: headers
           )
-        JSON.parse(response.body)
+        JSON.parse(response.body, symbolize_names: true)
       end
 
       def api_post(url, body = {}, custom_headers = {})
@@ -26,7 +26,7 @@ module Xhash
             Xhash.api_base + url,
             body: body.to_json, headers: headers
           )
-        JSON.parse(response.body)
+        JSON.parse(response.body, symbolize_names: true)
       end
     end
 

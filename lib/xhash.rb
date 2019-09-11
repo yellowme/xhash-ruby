@@ -1,6 +1,8 @@
+require 'json'
+
 require 'xhash/api_client'
 
-require 'xhash/document'
+require 'xhash/identification'
 
 require 'xhash/ocr'
 
