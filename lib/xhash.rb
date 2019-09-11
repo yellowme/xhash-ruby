@@ -4,7 +4,9 @@ require 'xhash/api_client'
 
 require 'xhash/identification'
 require 'xhash/proof_of_address'
+require 'xhash/customer'
 
+require 'xhash/store_data'
 require 'xhash/ocr'
 
 module Xhash
