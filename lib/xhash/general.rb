@@ -3,9 +3,8 @@ module Xhash
     def self.store_data(*user_body)
       url = 'store-data'
       body = Hash[*user_body]
-
-      response = api_post(url, body)
-
+      response = api_post(url: url, body: body)
+      raise MissingRequiredField.new(response) unless response[:id]
       Xhash::Customer.new(*response.values_at(*Xhash::Customer.members))
     end
 
