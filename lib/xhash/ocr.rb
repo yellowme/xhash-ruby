@@ -33,6 +33,10 @@ module Xhash
     def self.identification(document_url: nil, document_file: nil)
       url = 'ocr/identification'
 
+      if document_url.nil? and document_file.nil?
+        raise Xhash::MissingDocumentURLorFileError
+      end
+
       begin
         payload =
           request_by_file_or_url(
@@ -50,6 +54,10 @@ module Xhash
     def self.proof_of_address(document_url: nil, document_file: nil)
       url = 'ocr/proof-of-address'
 
+      if document_url.nil? and document_file.nil?
+        raise Xhash::MissingDocumentURLorFileError
+      end
+
       begin
         payload =
           request_by_file_or_url(
@@ -66,6 +74,10 @@ module Xhash
 
     def self.ine_reverse(document_url: nil, document_file: nil)
       url = 'ocr/ine-reverse'
+
+      if document_url.nil? and document_file.nil?
+        raise Xhash::MissingDocumentURLorFileError
+      end
 
       begin
         payload =
@@ -98,7 +110,7 @@ module Xhash
 
       response =
         api_post(
-          url: url, body: body, headers: headers, mutipart: !document_file.nil?
+          url: url, body: body, headers: headers, multipart: !document_file.nil?
         )
 
       payload = response[:payload]

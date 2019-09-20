@@ -8,7 +8,9 @@ module Xhash
     end
   end
 
-  class MissingRequiredField < Error; end
+  class MissingRequiredFieldError < Error; end
+
+  class InvalidCustomerFieldError < Error; end
 
   class MissingDocumentURLorFileError < Error; end
 end

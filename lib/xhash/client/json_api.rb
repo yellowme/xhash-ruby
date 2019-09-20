@@ -16,13 +16,13 @@ module Xhash
         JSON.parse(response.body, symbolize_names: true)
       end
 
-      def api_post(url:, body: {}, headers: {}, mutipart: false)
+      def api_post(url:, body: {}, headers: {}, multipart: false)
         custom_headers = headers.merge(default_headers)
 
         response =
           HTTParty.post(
             Xhash.api_base + url,
-            mutipart: mutipart, body: body.to_json, headers: custom_headers
+            multipart: multipart, body: body.to_json, headers: custom_headers
           )
         JSON.parse(response.body, symbolize_names: true)
       end

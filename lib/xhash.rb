@@ -1,11 +1,12 @@
 require 'json'
 
-require 'xhash/api_client'
+require 'xhash/client/json_api'
+require 'xhash/client/api_client'
 
 require 'xhash/error'
-require 'xhash/identification'
-require 'xhash/proof_of_address'
-require 'xhash/customer'
+require 'xhash/structs/identification'
+require 'xhash/structs/proof_of_address'
+require 'xhash/structs/customer'
 
 require 'xhash/general'
 require 'xhash/ocr'

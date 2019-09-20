@@ -167,6 +167,26 @@ describe Xhash::OCR do
 
   describe '.identification' do
     it 'successfully serialize INE to document' do
+      stub_request(:post, 'https://xhash.dev/api/ocr/identification').to_return(
+        body:
+          JSON.dump(
+            {
+              payload: {
+                name: 'MARGARITA',
+                last_name: 'GOMEZ',
+                mothers_last_name: 'VELAZQUEZ',
+                expiration_date: '2024-12-31',
+                street: 'C',
+                neighborhood: 'NACIO PITAGORAS 1253',
+                zip_code: 'INT 4',
+                city: 'COL. MORELOS 04800',
+                type: 'INE'
+              }
+            }
+          ),
+        status: 200
+      )
+
       ine_anverse =
         Xhash::OCR.identification(
           document_url:
@@ -184,10 +204,33 @@ describe Xhash::OCR do
       expect(ine_anverse.city).to eq('COL. MORELOS 04800')
       expect(ine_anverse.type).to eq('INE')
     end
+
+    it 'fails with missing file or url' do
+      begin
+        ine = Xhash::OCR.identification
+      rescue => exception
+        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+      end
+    end
   end
 
   describe '.proof_of_address' do
     it 'successfully serialize proof of address to document' do
+      stub_request(:post, 'https://xhash.dev/api/ocr/proof-of-address').to_return(
+        body:
+          JSON.dump(
+            {
+              payload: {
+                full_name: 'Prof Francesco Reichert',
+                neighborhood: 'Parkerchester',
+                province: 'Port Rosemarieview,VT',
+                type: 'TELMEX'
+              }
+            }
+          ),
+        status: 200
+      )
+
       proof_of_address =
         Xhash::OCR.proof_of_address(
           document_url:
@@ -200,10 +243,33 @@ describe Xhash::OCR do
       expect(proof_of_address.province).to eq('Port Rosemarieview,VT')
       expect(proof_of_address.type).to eq('TELMEX')
     end
+
+    it 'fails with missing file or url' do
+      begin
+        proof_of_address = Xhash::OCR.proof_of_address
+      rescue => exception
+        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+      end
+    end
   end
 
   describe '.ine_reverse' do
     it 'successfully serialize INE (reverse) to document' do
+      stub_request(:post, 'https://xhash.dev/api/ocr/ine-reverse').to_return(
+        body:
+          JSON.dump(
+            {
+              payload: {
+                full_name: 'Prof Francesco Reichert',
+                neighborhood: 'Parkerchester',
+                province: 'Port Rosemarieview,VT',
+                type: 'TELMEX'
+              }
+            }
+          ),
+        status: 200
+      )
+
       ine_reverse =
         Xhash::OCR.ine_reverse(
           document_url:
@@ -211,6 +277,14 @@ describe Xhash::OCR do
         )
 
       expect(ine_reverse).to be_a(Xhash::Identification)
+    end
+
+    it 'fails with missing file or url' do
+      begin
+        ine_reverse = Xhash::OCR.ine_reverse
+      rescue => exception
+        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+      end
     end
   end
 end

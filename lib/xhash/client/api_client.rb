@@ -1,7 +1,5 @@
 require 'singleton'
 
-require 'xhash/json_api'
-
 module Xhash
   class ApiClient
     include Xhash::JsonApi
