@@ -9,31 +9,20 @@ module Xhash
         }
       end
 
-      def api_get(url, custom_headers = {})
-        headers = custom_headers.merge(default_headers)
-        response = HTTParty.get(Xhash.api_base + url, headers: headers)
+      def api_get(url:, headers: {})
+        custom_headers = headers.merge(default_headers)
+        response = HTTParty.get(Xhash.api_base + url, headers: custom_headers)
 
         JSON.parse(response.body, symbolize_names: true)
       end
 
-      def api_post(url, body = {}, custom_headers = {})
-        headers = custom_headers.merge(default_headers)
+      def api_post(url:, body: {}, headers: {}, mutipart: false)
+        custom_headers = headers.merge(default_headers)
 
         response =
           HTTParty.post(
             Xhash.api_base + url,
-            body: body.to_json, headers: headers
-          )
-        JSON.parse(response.body, symbolize_names: true)
-      end
-
-      def api_post_multipart(url, body = {}, custom_headers = {})
-        headers = custom_headers.merge(default_headers)
-
-        response =
-          HTTParty.post(
-            Xhash.api_base + url,
-            mutipart: true, body: body, headers: headers
+            mutipart: mutipart, body: body.to_json, headers: custom_headers
           )
         JSON.parse(response.body, symbolize_names: true)
       end

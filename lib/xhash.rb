@@ -2,6 +2,7 @@ require 'json'
 
 require 'xhash/api_client'
 
+require 'xhash/error'
 require 'xhash/identification'
 require 'xhash/proof_of_address'
 require 'xhash/customer'
