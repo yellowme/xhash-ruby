@@ -80,12 +80,62 @@ describe Xhash::OCR do
       expect(ine.type).to eq('INE')
     end
 
-    it 'fails to serialize INE to document with missing file or url' do
-      begin
-        ine = Xhash::OCR.generic
-      rescue => exception
-        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
-      end
+    it 'successfully serialize proof of address to document by url' do
+      stub_request(:post, 'https://xhash.dev/api/ocr').to_return(
+        body:
+          JSON.dump(
+            {
+              payload: {
+                full_name: 'Prof Francesco Reichert',
+                neighborhood: 'Parkerchester',
+                province: 'Port Rosemarieview,VT',
+                type: 'TELMEX'
+              }
+            }
+          ),
+        status: 200
+      )
+
+      proof_of_address =
+        Xhash::OCR.generic(
+          document_url:
+            'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/c7d40899ab9ed7aa689837e39b64a6eb07117353f88ce3f8b9d1ca73bea3d80e.png'
+        )
+
+      expect(proof_of_address).to be_a(Xhash::ProofOfAddress)
+      expect(proof_of_address.full_name).to eq('Prof Francesco Reichert')
+      expect(proof_of_address.neighborhood).to eq('Parkerchester')
+      expect(proof_of_address.province).to eq('Port Rosemarieview,VT')
+      expect(proof_of_address.type).to eq('TELMEX')
+    end
+
+    it 'successfully serialize proof of address to document by file' do
+      stub_request(:post, 'https://xhash.dev/api/ocr').to_return(
+        body:
+          JSON.dump(
+            {
+              payload: {
+                full_name: 'Prof Francesco Reichert',
+                neighborhood: 'Parkerchester',
+                province: 'Port Rosemarieview,VT',
+                type: 'TELMEX'
+              }
+            }
+          ),
+        status: 200
+      )
+
+      document = File.open('spec/files/telmex.png')
+
+      proof_of_address = Xhash::OCR.generic(document_file: document)
+
+      document.close
+
+      expect(proof_of_address).to be_a(Xhash::ProofOfAddress)
+      expect(proof_of_address.full_name).to eq('Prof Francesco Reichert')
+      expect(proof_of_address.neighborhood).to eq('Parkerchester')
+      expect(proof_of_address.province).to eq('Port Rosemarieview,VT')
+      expect(proof_of_address.type).to eq('TELMEX')
     end
 
     it 'fails to serialize INE to document with html error' do
@@ -106,18 +156,12 @@ describe Xhash::OCR do
       end
     end
 
-    it 'successfully serialize proof of address to document by url' do
-      proof_of_address =
-        Xhash::OCR.generic(
-          document_url:
-            'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/c7d40899ab9ed7aa689837e39b64a6eb07117353f88ce3f8b9d1ca73bea3d80e.png'
-        )
-
-      expect(proof_of_address).to be_a(Xhash::ProofOfAddress)
-      expect(proof_of_address.full_name).to eq('Prof Francesco Reichert')
-      expect(proof_of_address.neighborhood).to eq('Parkerchester')
-      expect(proof_of_address.province).to eq('Port Rosemarieview,VT')
-      expect(proof_of_address.type).to eq('TELMEX')
+    it 'fails with missing file or url' do
+      begin
+        ine = Xhash::OCR.generic
+      rescue => exception
+        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+      end
     end
   end
 

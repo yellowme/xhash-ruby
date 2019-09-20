@@ -30,39 +30,79 @@ module Xhash
       document
     end
 
-    def self.identification(document_url:)
+    def self.identification(document_url: nil, document_file: nil)
       url = 'ocr/identification'
-      body = { 'document_url' => document_url }
 
-      response = api_post(url, body)
-      payload = response[:payload]
+      begin
+        payload =
+          request_by_file_or_url(
+            url: url, document_url: document_url, document_file: document_file
+          )
+      rescue => exception
+        raise exception
+      end
 
       Xhash::Identification.new(
         *payload.values_at(*Xhash::Identification.members)
       )
     end
 
-    def self.proof_of_address(document_url:)
+    def self.proof_of_address(document_url: nil, document_file: nil)
       url = 'ocr/proof-of-address'
-      body = { 'document_url' => document_url }
 
-      response = api_post(url, body)
-      payload = response[:payload]
+      begin
+        payload =
+          request_by_file_or_url(
+            url: url, document_url: document_url, document_file: document_file
+          )
+      rescue => exception
+        raise exception
+      end
 
       Xhash::ProofOfAddress.new(
         *payload.values_at(*Xhash::ProofOfAddress.members)
       )
     end
 
-    def self.ine_reverse(document_url:)
+    def self.ine_reverse(document_url: nil, document_file: nil)
       url = 'ocr/ine-reverse'
-      body = { 'document_url' => document_url }
 
-      response = api_post(url, body)
-      payload = response[:payload]
+      begin
+        payload =
+          request_by_file_or_url(
+            url: url, document_url: document_url, document_file: document_file
+          )
+      rescue => exception
+        raise exception
+      end
+
       Xhash::Identification.new(
         *payload.values_at(*Xhash::Identification.members)
       )
+    end
+
+    private
+
+    def self.request_by_file_or_url(
+      url: nil, document_url: nil, document_file: nil
+    )
+      body = {
+        'document_url' => document_url, 'document_file' => document_file
+      }
+      headers =
+        unless document_file.nil?
+          { 'boundary' => '---011000010111000001101001' }
+        else
+          {}
+        end
+
+      response =
+        api_post(
+          url: url, body: body, headers: headers, mutipart: !document_file.nil?
+        )
+
+      payload = response[:payload]
+      payload
     end
   end
 end
