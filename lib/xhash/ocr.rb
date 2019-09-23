@@ -105,12 +105,12 @@ module Xhash
       response =
         if document_file.nil?
           api_post(
-            url: url, body: body, headers: { 'boundary' => '---011000010111000001101001' }
+            url: url,
+            body: body,
+            headers: { 'boundary' => '---011000010111000001101001' }
           )
         else
-          data = api_post_multipart(
-            url: url, body: body
-          )
+          data = api_post_multipart(url: url, body: body)
 
           JSON.parse(data, symbolize_names: true)
         end
