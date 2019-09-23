@@ -159,7 +159,7 @@ describe Xhash::General do
   describe '.store_file' do
     it 'successfully store file to a customer' do
       stub_request(:post, 'https://xhash.dev/api/store-file').to_return(
-        body: JSON.dump('Image stored'), status: 200
+        body: 'Image stored', status: 200
       )
 
       document = File.open('spec/files/ife_front.png')

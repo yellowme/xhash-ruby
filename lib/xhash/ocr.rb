@@ -101,17 +101,19 @@ module Xhash
       body = {
         'document_url' => document_url, 'document_file' => document_file
       }
-      headers =
-        unless document_file.nil?
-          { 'boundary' => '---011000010111000001101001' }
-        else
-          {}
-        end
 
       response =
-        api_post(
-          url: url, body: body, headers: headers, multipart: !document_file.nil?
-        )
+        if document_file.nil?
+          api_post(
+            url: url, body: body, headers: { 'boundary' => '---011000010111000001101001' }
+          )
+        else
+          data = api_post_multipart(
+            url: url, body: body
+          )
+
+          JSON.parse(data, symbolize_names: true)
+        end
 
       payload = response[:payload]
       payload
