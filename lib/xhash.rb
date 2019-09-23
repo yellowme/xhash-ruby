@@ -4,6 +4,7 @@ require 'xhash/client/json_api'
 require 'xhash/client/api_client'
 
 require 'xhash/error'
+require 'xhash/document_types'
 require 'xhash/structs/rfc'
 require 'xhash/structs/identification'
 require 'xhash/structs/proof_of_address'

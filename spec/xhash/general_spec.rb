@@ -166,7 +166,9 @@ describe Xhash::General do
 
       response =
         Xhash::General.store_file(
-          customer_id: 'my-customer-id-1', document_type: 1, document: document
+          customer_id: 'my-customer-id-1',
+          document_type: Xhash::DocumentType::ID::INE_FRONT,
+          document: document
         )
 
       document.close
