@@ -216,7 +216,8 @@ describe Xhash::OCR do
 
   describe '.proof_of_address' do
     it 'successfully serialize proof of address to document' do
-      stub_request(:post, 'https://xhash.dev/api/ocr/proof-of-address').to_return(
+      stub_request(:post, 'https://xhash.dev/api/ocr/proof-of-address')
+        .to_return(
         body:
           JSON.dump(
             {

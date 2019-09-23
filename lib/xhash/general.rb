@@ -25,8 +25,11 @@ module Xhash
         'document' => document
       }
 
-      response = api_post(url: url, body: body, headers: headers, multipart: true)
-      raise Xhash::MissingRequiredFieldError.new(response) if response != 'Image stored'
+      response =
+        api_post(url: url, body: body, headers: headers, multipart: true)
+      if response != 'Image stored'
+        raise Xhash::MissingRequiredFieldError.new(response)
+      end
       response
     end
   end
