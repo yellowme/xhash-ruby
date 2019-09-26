@@ -30,6 +30,7 @@ describe Xhash::SAT do
       expect(rfc.last_name).to eq('Suarez')
       expect(rfc.mothers_last_name).to eq('sepulveda')
       expect(rfc.birth_date).to eq('1994-03-19')
+      expect(rfc.rfc).to eq('SUSB940319BA5')
     end
   end
 end
