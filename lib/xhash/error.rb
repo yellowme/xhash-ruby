@@ -13,4 +13,6 @@ module Xhash
   class InvalidCustomerFieldError < Error; end
 
   class MissingDocumentURLorFileError < Error; end
+
+  class InvalidDocumentError < Error; end
 end

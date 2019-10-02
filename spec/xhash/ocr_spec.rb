@@ -212,6 +212,22 @@ describe Xhash::OCR do
         expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
       end
     end
+
+    it 'fails with invalid INE document' do
+      stub_request(:post, 'https://xhash.dev/api/ocr').to_return(
+        body: JSON.dump({ "result": false, "payload": nil }), status: 200
+      )
+
+      begin
+        ine =
+          Xhash::OCR.generic(
+            document_url:
+              'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/7cd6994d9ad52e8943be1ae00bac60c461430cdf2af6159afa4b9be749706472.png'
+          )
+      rescue => exception
+        expect(exception).to be_a(Xhash::InvalidDocumentError)
+      end
+    end
   end
 
   describe '.proof_of_address' do
@@ -252,6 +268,23 @@ describe Xhash::OCR do
         expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
       end
     end
+
+    it 'fails with invalid proof of address document' do
+      stub_request(:post, 'https://xhash.dev/api/ocr/proof-of-address')
+        .to_return(
+        body: JSON.dump({ "result": false, "payload": nil }), status: 200
+      )
+
+      begin
+        ine =
+          Xhash::OCR.proof_of_address(
+            document_url:
+              'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/7cd6994d9ad52e8943be1ae00bac60c461430cdf2af6159afa4b9be749706472.png'
+          )
+      rescue => exception
+        expect(exception).to be_a(Xhash::InvalidDocumentError)
+      end
+    end
   end
 
   describe '.ine_reverse' do
@@ -285,6 +318,22 @@ describe Xhash::OCR do
         ine_reverse = Xhash::OCR.ine_reverse
       rescue => exception
         expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+      end
+    end
+
+    it 'fails with invalid INE reverse document' do
+      stub_request(:post, 'https://xhash.dev/api/ocr/ine-reverse').to_return(
+        body: JSON.dump({ "result": false, "payload": nil }), status: 200
+      )
+
+      begin
+        ine =
+          Xhash::OCR.ine_reverse(
+            document_url:
+              'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/7cd6994d9ad52e8943be1ae00bac60c461430cdf2af6159afa4b9be749706472.png'
+          )
+      rescue => exception
+        expect(exception).to be_a(Xhash::InvalidDocumentError)
       end
     end
   end

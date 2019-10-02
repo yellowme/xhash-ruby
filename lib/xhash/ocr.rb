@@ -116,6 +116,7 @@ module Xhash
         end
 
       payload = response[:payload]
+      raise Xhash::InvalidDocumentError.new if payload.nil?
       payload
     end
   end
