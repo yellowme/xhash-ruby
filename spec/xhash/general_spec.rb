@@ -174,5 +174,30 @@ describe Xhash::General do
       document.close
       expect(response).to eq('Image stored')
     end
+
+    it 'fails store file to unexisting user' do
+      stub_request(:post, 'https://xhash.dev/api/store-file').to_return(
+        body:
+          JSON.dump({ customer_id: ['The selected customer id is invalid.'] }),
+        status: 200
+      )
+
+      document = File.open('spec/files/ife_front.png')
+
+      begin
+        response =
+          Xhash::General.store_file(
+            customer_id: 'my-customer-id-1',
+            document_type: Xhash::DocumentType::ID::INE_FRONT,
+            document: document
+          )
+      rescue => exception
+        document.close
+        expect(exception).to be_a(Xhash::MissingRequiredFieldError)
+        expect(exception.response[:customer_id]).to eq(
+          ['The selected customer id is invalid.']
+        )
+      end
+    end
   end
 end

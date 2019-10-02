@@ -28,7 +28,9 @@ module Xhash
       response = api_post_multipart(url: url, body: body, headers: headers)
 
       unless response == 'Image stored'
-        raise Xhash::MissingRequiredFieldError.new(response)
+        raise Xhash::MissingRequiredFieldError.new(
+                JSON.parse(response, symbolize_names: true)
+              )
       end
 
       response
