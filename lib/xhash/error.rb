@@ -15,4 +15,6 @@ module Xhash
   class MissingDocumentURLorFileError < Error; end
 
   class InvalidDocumentError < Error; end
+
+  class InvalidCURPError < Error; end
 end
