@@ -215,7 +215,7 @@ describe Xhash::OCR do
 
     it 'fails with invalid INE document' do
       stub_request(:post, 'https://xhash.dev/api/ocr').to_return(
-        body: JSON.dump({ "result": false, "payload": nil }), status: 200
+        body: JSON.dump({ result: false, payload: nil }), status: 200
       )
 
       begin
@@ -272,7 +272,7 @@ describe Xhash::OCR do
     it 'fails with invalid proof of address document' do
       stub_request(:post, 'https://xhash.dev/api/ocr/proof-of-address')
         .to_return(
-        body: JSON.dump({ "result": false, "payload": nil }), status: 200
+        body: JSON.dump({ result: false, payload: nil }), status: 200
       )
 
       begin
@@ -293,11 +293,29 @@ describe Xhash::OCR do
         body:
           JSON.dump(
             {
+              is_consistentent: false,
               payload: {
-                full_name: 'Prof Francesco Reichert',
-                neighborhood: 'Parkerchester',
-                province: 'Port Rosemarieview,VT',
-                type: 'TELMEX'
+                lines: [
+                  'IDMEX1836577170<<0747116375842',
+                  '8007057M1812315MEX<02<<12345<7',
+                  'GOMEZ<VELAZzQUEZ<<MARGARITA<',
+                  ''
+                ],
+                cic: '183657717',
+                cic_digit_check: '0',
+                is_cic_digit_check_consistent: false,
+                section_and_consecutive: '0747116375842',
+                date: '800705',
+                date_check_digit: '7',
+                gender: 'M',
+                expiration_date: '181231',
+                expiration_date_digit: '5',
+                nationality: 'MEX',
+                emission_and_fuar: '02-12345',
+                name: 'MARGARITA ',
+                mothers_last_name: 'VELAZzQUEZ',
+                last_name: 'GOMEZ',
+                last_names: 'GOMEZ VELAZzQUEZ'
               }
             }
           ),
@@ -323,7 +341,7 @@ describe Xhash::OCR do
 
     it 'fails with invalid INE reverse document' do
       stub_request(:post, 'https://xhash.dev/api/ocr/ine-reverse').to_return(
-        body: JSON.dump({ "result": false, "payload": nil }), status: 200
+        body: JSON.dump({ result: false, payload: nil }), status: 200
       )
 
       begin

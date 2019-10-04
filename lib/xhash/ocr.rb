@@ -1,6 +1,6 @@
 module Xhash
   class OCR < ApiClient
-    IDENTIFICATION_TYPES = %w[INE, CARTILLA MILITAR, PASAPORTE]
+    IDENTIFICATION_TYPES = ['INE', 'CARTILLA MILITAR', 'PASAPORTE']
 
     def self.generic(document_url: nil, document_file: nil)
       url = 'ocr'
