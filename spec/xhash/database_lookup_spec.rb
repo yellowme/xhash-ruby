@@ -71,7 +71,8 @@ describe Xhash::SAT do
       begin
         Xhash::DatabaseLookup.renapo(curp)
       rescue => exception
-        expect(exception).to be_a(Xhash::InvalidCURPError)
+        expect(exception).to be_a(Xhash::InvalidFieldError)
+        expect(exception.message).to eq(Xhash::ErrorMessage::INVALID_CURP)
       end
     end
 
@@ -87,6 +88,7 @@ describe Xhash::SAT do
         Xhash::DatabaseLookup.renapo(curp)
       rescue => exception
         expect(exception).to be_a(Xhash::MissingRequiredFieldError)
+        expect(exception.message).to eq(Xhash::ErrorMessage::MISSING_CURP)
       end
     end
   end

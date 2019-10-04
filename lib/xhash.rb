@@ -10,6 +10,8 @@ require 'xhash/structs/identification'
 require 'xhash/structs/proof_of_address'
 require 'xhash/structs/customer'
 require 'xhash/structs/curp'
+require 'xhash/error_messages'
+require 'xhash/formatters'
 
 require 'xhash/sat'
 require 'xhash/general'

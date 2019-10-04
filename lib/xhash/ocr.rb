@@ -6,7 +6,9 @@ module Xhash
       url = 'ocr'
 
       if document_url.nil? and document_file.nil?
-        raise Xhash::MissingDocumentURLorFileError
+        raise Xhash::MissingRequiredFieldError.new(
+                { message: Xhash::ErrorMessage::MISSING_FILE }
+              )
       end
 
       payload =
@@ -34,17 +36,15 @@ module Xhash
       url = 'ocr/identification'
 
       if document_url.nil? and document_file.nil?
-        raise Xhash::MissingDocumentURLorFileError
+        raise Xhash::MissingRequiredFieldError.new(
+                { message: Xhash::ErrorMessage::MISSING_FILE }
+              )
       end
 
-      begin
-        payload =
-          request_by_file_or_url(
-            url: url, document_url: document_url, document_file: document_file
-          )
-      rescue => exception
-        raise exception
-      end
+      payload =
+        request_by_file_or_url(
+          url: url, document_url: document_url, document_file: document_file
+        )
 
       Xhash::Identification.new(
         *payload.values_at(*Xhash::Identification.members)
@@ -55,17 +55,15 @@ module Xhash
       url = 'ocr/proof-of-address'
 
       if document_url.nil? and document_file.nil?
-        raise Xhash::MissingDocumentURLorFileError
+        raise Xhash::MissingRequiredFieldError.new(
+                { message: Xhash::ErrorMessage::MISSING_FILE }
+              )
       end
 
-      begin
-        payload =
-          request_by_file_or_url(
-            url: url, document_url: document_url, document_file: document_file
-          )
-      rescue => exception
-        raise exception
-      end
+      payload =
+        request_by_file_or_url(
+          url: url, document_url: document_url, document_file: document_file
+        )
 
       Xhash::ProofOfAddress.new(
         *payload.values_at(*Xhash::ProofOfAddress.members)
@@ -76,17 +74,15 @@ module Xhash
       url = 'ocr/ine-reverse'
 
       if document_url.nil? and document_file.nil?
-        raise Xhash::MissingDocumentURLorFileError
+        raise Xhash::MissingRequiredFieldError.new(
+                { message: Xhash::ErrorMessage::MISSING_FILE }
+              )
       end
 
-      begin
-        payload =
-          request_by_file_or_url(
-            url: url, document_url: document_url, document_file: document_file
-          )
-      rescue => exception
-        raise exception
-      end
+      payload =
+        request_by_file_or_url(
+          url: url, document_url: document_url, document_file: document_file
+        )
 
       Xhash::Identification.new(
         *payload.values_at(*Xhash::Identification.members)
@@ -111,12 +107,17 @@ module Xhash
           )
         else
           data = api_post_multipart(url: url, body: body)
-
           JSON.parse(data, symbolize_names: true)
         end
 
       payload = response[:payload]
-      raise Xhash::InvalidDocumentError.new if payload.nil?
+
+      if payload.nil?
+        raise Xhash::InvalidFieldError.new(
+                { message: Xhash::ErrorMessage::INVALID_FILE }
+              )
+      end
+
       payload
     end
   end

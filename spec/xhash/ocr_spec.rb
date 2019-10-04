@@ -160,7 +160,8 @@ describe Xhash::OCR do
       begin
         ine = Xhash::OCR.generic
       rescue => exception
-        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+        expect(exception).to be_a(Xhash::MissingRequiredFieldError)
+        expect(exception.message).to eq(Xhash::ErrorMessage::MISSING_FILE)
       end
     end
   end
@@ -209,7 +210,7 @@ describe Xhash::OCR do
       begin
         ine = Xhash::OCR.identification
       rescue => exception
-        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+        expect(exception).to be_a(Xhash::MissingRequiredFieldError)
       end
     end
 
@@ -225,7 +226,7 @@ describe Xhash::OCR do
               'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/7cd6994d9ad52e8943be1ae00bac60c461430cdf2af6159afa4b9be749706472.png'
           )
       rescue => exception
-        expect(exception).to be_a(Xhash::InvalidDocumentError)
+        expect(exception).to be_a(Xhash::InvalidFieldError)
       end
     end
   end
@@ -265,7 +266,7 @@ describe Xhash::OCR do
       begin
         proof_of_address = Xhash::OCR.proof_of_address
       rescue => exception
-        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+        expect(exception).to be_a(Xhash::MissingRequiredFieldError)
       end
     end
 
@@ -282,7 +283,7 @@ describe Xhash::OCR do
               'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/7cd6994d9ad52e8943be1ae00bac60c461430cdf2af6159afa4b9be749706472.png'
           )
       rescue => exception
-        expect(exception).to be_a(Xhash::InvalidDocumentError)
+        expect(exception).to be_a(Xhash::InvalidFieldError)
       end
     end
   end
@@ -335,7 +336,7 @@ describe Xhash::OCR do
       begin
         ine_reverse = Xhash::OCR.ine_reverse
       rescue => exception
-        expect(exception).to be_a(Xhash::MissingDocumentURLorFileError)
+        expect(exception).to be_a(Xhash::MissingRequiredFieldError)
       end
     end
 
@@ -351,7 +352,7 @@ describe Xhash::OCR do
               'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/7cd6994d9ad52e8943be1ae00bac60c461430cdf2af6159afa4b9be749706472.png'
           )
       rescue => exception
-        expect(exception).to be_a(Xhash::InvalidDocumentError)
+        expect(exception).to be_a(Xhash::InvalidFieldError)
       end
     end
   end

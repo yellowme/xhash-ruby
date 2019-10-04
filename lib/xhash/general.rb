@@ -4,7 +4,17 @@ module Xhash
       url = 'store-data'
       body = Hash[*user_body]
       response = api_post(url: url, body: body)
-      raise Xhash::MissingRequiredFieldError.new(response) unless response[:id]
+
+      unless response[:id]
+        raise Xhash::MissingRequiredFieldError.new(
+                {
+                  message:
+                    Xhash::Formatters.invalid_field_message_to_s(response),
+                  response: response
+                }
+              )
+      end
+
       Xhash::Customer.new(*response.values_at(*Xhash::Customer.members))
     end
 
@@ -12,7 +22,17 @@ module Xhash
       url = "get-customer/#{customer_id}"
       response = api_get(url: url)
       payload = response[:payload]
-      raise Xhash::InvalidCustomerFieldError.new(response) if payload.nil?
+
+      if payload.nil?
+        raise Xhash::MissingRequiredFieldError.new(
+                {
+                  message:
+                    Xhash::Formatters.invalid_field_message_to_s(response),
+                  response: response
+                }
+              )
+      end
+
       Xhash::Customer.new(*payload.values_at(*Xhash::Customer.members))
     end
 
@@ -28,8 +48,12 @@ module Xhash
       response = api_post_multipart(url: url, body: body, headers: headers)
 
       unless response == 'Image stored'
+        error = JSON.parse(response, symbolize_names: true)
         raise Xhash::MissingRequiredFieldError.new(
-                JSON.parse(response, symbolize_names: true)
+                {
+                  message: Xhash::Formatters.invalid_field_message_to_s(error),
+                  response: error
+                }
               )
       end
 

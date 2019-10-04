@@ -1,20 +1,15 @@
 module Xhash
   class Error < StandardError
-    attr_reader :response
+    attr_reader :message, :response
 
-    def initialize(response = {})
-      @response = response
+    def initialize(options = {})
+      @message = options[:message]
+      @response = options[:response]
       super
     end
   end
 
   class MissingRequiredFieldError < Error; end
 
-  class InvalidCustomerFieldError < Error; end
-
-  class MissingDocumentURLorFileError < Error; end
-
-  class InvalidDocumentError < Error; end
-
-  class InvalidCURPError < Error; end
+  class InvalidFieldError < Error; end
 end

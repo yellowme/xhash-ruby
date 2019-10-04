@@ -90,11 +90,14 @@ describe Xhash::General do
             external_customer_id: 'my-customer-id-1'
           )
       rescue => exception
+        expect(exception).to be_a(Xhash::MissingRequiredFieldError)
+        expect(exception.message).to eq(
+          'The curp field is required. The gender field is required.'
+        )
         expect(exception.response[:curp]).to eq(['The curp field is required.'])
         expect(exception.response[:gender]).to eq(
           ['The gender field is required.']
         )
-        expect(exception).to be_a(Xhash::MissingRequiredFieldError)
       end
     end
   end
@@ -148,7 +151,8 @@ describe Xhash::General do
       begin
         customer = Xhash::General.get_customer(customer_id: 'my-customer-id-2')
       rescue => exception
-        expect(exception).to be_a(Xhash::InvalidCustomerFieldError)
+        expect(exception).to be_a(Xhash::MissingRequiredFieldError)
+        expect(exception.message).to eq('The selected customer id is invalid.')
         expect(exception.response[:customer_id]).to eq(
           ['The selected customer id is invalid.']
         )
@@ -194,6 +198,7 @@ describe Xhash::General do
       rescue => exception
         document.close
         expect(exception).to be_a(Xhash::MissingRequiredFieldError)
+        expect(exception.message).to eq('The selected customer id is invalid.')
         expect(exception.response[:customer_id]).to eq(
           ['The selected customer id is invalid.']
         )
