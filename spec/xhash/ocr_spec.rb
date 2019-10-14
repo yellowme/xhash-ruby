@@ -88,7 +88,10 @@ describe Xhash::OCR do
               payload: {
                 full_name: 'Prof Francesco Reichert',
                 neighborhood: 'Parkerchester',
+                full_address: 'CLL 59 E DIAGONAL 623\n76 Y 74 A Y RED CANALIZA\nLAS AMERICAS\nMERIDA, MERIDA YU\nC.P. 97302-CR -97111',
+                zip_code: '97302',
                 province: 'Port Rosemarieview,VT',
+                date: '2019-09-01',
                 type: 'TELMEX'
               }
             }
@@ -107,6 +110,9 @@ describe Xhash::OCR do
       expect(proof_of_address.neighborhood).to eq('Parkerchester')
       expect(proof_of_address.province).to eq('Port Rosemarieview,VT')
       expect(proof_of_address.type).to eq('TELMEX')
+      expect(proof_of_address.date).to eq('2019-09-01')
+      expect(proof_of_address.zip_code).to eq('97302')
+      expect(proof_of_address.full_address).to eq('CLL 59 E DIAGONAL 623\n76 Y 74 A Y RED CANALIZA\nLAS AMERICAS\nMERIDA, MERIDA YU\nC.P. 97302-CR -97111')
     end
 
     it 'successfully serialize proof of address to document by file' do
