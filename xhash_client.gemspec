@@ -10,7 +10,9 @@ Gem::Specification.new do |spec|
   spec.date        = '2019-10-10'
   spec.description = "Ruby Bindings for Xhash API"
   spec.summary     = "Ruby library built for Xhash API"
-  spec.files       = ["lib/xhash.rb"]
+  spec.files       = `git ls-files`.split($/)
+  spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
   spec.authors     = ["Yellowme"]
   spec.email       = 'hola@yellowme.mx'
   spec.homepage    = 'https://rubygems.org/gems/xhash-ruby'
