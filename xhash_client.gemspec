@@ -5,7 +5,7 @@ require "xhash/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
-  spec.name        = "xhash"
+  spec.name        = "xhash_client"
   spec.version     = Xhash::VERSION
   spec.date        = '2019-10-10'
   spec.description = "Ruby Bindings for Xhash API"
