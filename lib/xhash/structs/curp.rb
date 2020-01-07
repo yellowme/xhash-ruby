@@ -1,15 +1,16 @@
 module Xhash
   CURP =
     Struct.new(
+      :country_of_birth,
+      :created_at,
       :curp,
-      :name,
+      :day_of_birth,
+      :gender,
+      :id,
       :last_name,
       :mothers_last_name,
-      :gender,
+      :name,
       :province_of_birth,
-      :day_of_birth,
-      :updated_at,
-      :created_at,
-      :id
+      :updated_at
     )
 end
