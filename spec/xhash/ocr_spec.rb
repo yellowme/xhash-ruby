@@ -88,7 +88,8 @@ describe Xhash::OCR do
               payload: {
                 full_name: 'Prof Francesco Reichert',
                 neighborhood: 'Parkerchester',
-                full_address: 'CLL 59 E DIAGONAL 623\n76 Y 74 A Y RED CANALIZA\nLAS AMERICAS\nMERIDA, MERIDA YU\nC.P. 97302-CR -97111',
+                full_address:
+                  'CLL 59 E DIAGONAL 623\n76 Y 74 A Y RED CANALIZA\nLAS AMERICAS\nMERIDA, MERIDA YU\nC.P. 97302-CR -97111',
                 zip_code: '97302',
                 province: 'Port Rosemarieview,VT',
                 date: '2019-09-01',
@@ -112,7 +113,9 @@ describe Xhash::OCR do
       expect(proof_of_address.type).to eq('TELMEX')
       expect(proof_of_address.date).to eq('2019-09-01')
       expect(proof_of_address.zip_code).to eq('97302')
-      expect(proof_of_address.full_address).to eq('CLL 59 E DIAGONAL 623\n76 Y 74 A Y RED CANALIZA\nLAS AMERICAS\nMERIDA, MERIDA YU\nC.P. 97302-CR -97111')
+      expect(proof_of_address.full_address).to eq(
+        'CLL 59 E DIAGONAL 623\n76 Y 74 A Y RED CANALIZA\nLAS AMERICAS\nMERIDA, MERIDA YU\nC.P. 97302-CR -97111'
+      )
     end
 
     it 'successfully serialize proof of address to document by file' do
@@ -158,7 +161,7 @@ describe Xhash::OCR do
               'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/7cd6994d9ad52e8943be1ae00bac60c461430cdf2af6159afa4b9be749706472.png'
           )
       rescue => exception
-        expect(exception).to be_a(JSON::ParserError)
+        expect(exception).to be_a(Xhash::MalformedResponse)
       end
     end
 

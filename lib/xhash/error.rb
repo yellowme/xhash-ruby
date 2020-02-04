@@ -12,4 +12,6 @@ module Xhash
   class MissingRequiredFieldError < Error; end
 
   class InvalidFieldError < Error; end
+
+  class MalformedResponse < Error; end
 end
