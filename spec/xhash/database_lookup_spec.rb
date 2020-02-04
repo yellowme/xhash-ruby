@@ -76,6 +76,19 @@ describe Xhash::SAT do
       end
     end
 
+    it 'fails with html error' do
+      curp = 'JIQJ890611HDFXNN04'
+
+      stub_request(:post, 'https://xhash.dev/api/database-lookup/renapo')
+        .to_return(body: '<p>bad</p>', status: 200)
+
+      begin
+        Xhash::DatabaseLookup.renapo(curp)
+      rescue => exception
+        expect(exception).to be_a(Xhash::MalformedResponse)
+      end
+    end
+
     it 'fails with malformed CURP' do
       curp = 'asdf'
 

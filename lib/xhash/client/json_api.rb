@@ -13,7 +13,13 @@ module Xhash
         custom_headers = headers.merge(default_headers)
         response = HTTParty.get(Xhash.api_base + url, headers: custom_headers)
 
-        JSON.parse(response.body, symbolize_names: true)
+        raise Xhash::Error.new(response) unless response_ok?(response)
+
+        begin
+          JSON.parse(response.body, symbolize_names: true)
+        rescue => exception
+          raise Xhash::MalformedResponse.new
+        end
       end
 
       def api_post(url:, body: {}, headers: {})
@@ -25,7 +31,13 @@ module Xhash
             body: body.to_json, headers: custom_headers
           )
 
-        JSON.parse(response.body, symbolize_names: true)
+        raise Xhash::Error.new(response) unless response_ok?(response)
+
+        begin
+          JSON.parse(response.body, symbolize_names: true)
+        rescue => exception
+          raise Xhash::MalformedResponse.new
+        end
       end
 
       def api_post_multipart(url:, body: {}, headers: {})
@@ -37,7 +49,12 @@ module Xhash
             multipart: true, body: body, headers: custom_headers
           )
 
+        raise Xhash::Error.new(response) unless response_ok?(response)
         response.body
+      end
+
+      def response_ok?(response)
+        !(response.code == 404 || response.code >= 500)
       end
     end
 
