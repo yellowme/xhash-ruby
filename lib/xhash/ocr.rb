@@ -96,7 +96,7 @@ module Xhash
     )
       body = {
         'document_url' => document_url, 'document_file' => document_file
-      }
+      }.compact
 
       response =
         if document_file.nil?

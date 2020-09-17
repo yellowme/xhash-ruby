@@ -7,6 +7,8 @@ describe Xhash::OCR do
         body:
           JSON.dump(
             {
+              result: true,
+              execution_time: 2.7695868015289307,
               payload: {
                 name: 'MARGARITA',
                 last_name: 'GOMEZ',
@@ -16,7 +18,8 @@ describe Xhash::OCR do
                 neighborhood: 'NACIO PITAGORAS 1253',
                 zip_code: 'INT 4',
                 city: 'COL. MORELOS 04800',
-                type: 'INE'
+                type: 'INE',
+                control: "2"
               }
             }
           ),
@@ -46,6 +49,8 @@ describe Xhash::OCR do
         body:
           JSON.dump(
             {
+              result: true,
+              execution_time: 2.7695868015289307,
               payload: {
                 name: 'MARGARITA',
                 last_name: 'GOMEZ',
@@ -55,7 +60,8 @@ describe Xhash::OCR do
                 neighborhood: 'NACIO PITAGORAS 1253',
                 zip_code: 'INT 4',
                 city: 'COL. MORELOS 04800',
-                type: 'INE'
+                type: 'INE',
+                control: "2"
               }
             }
           ),
@@ -181,6 +187,8 @@ describe Xhash::OCR do
         body:
           JSON.dump(
             {
+              result: true,
+              execution_time: 2.7695868015289307,
               payload: {
                 name: 'MARGARITA',
                 last_name: 'GOMEZ',
@@ -190,7 +198,8 @@ describe Xhash::OCR do
                 neighborhood: 'NACIO PITAGORAS 1253',
                 zip_code: 'INT 4',
                 city: 'COL. MORELOS 04800',
-                type: 'INE'
+                type: 'INE',
+                control: "2"
               }
             }
           ),
