@@ -304,6 +304,24 @@ describe Xhash::OCR do
         expect(exception).to be_a(Xhash::InvalidFieldError)
       end
     end
+
+    it 'fails to serialize to document with html error' do
+      stub_request(:post, 'https://xhash.dev/api/ocr/proof-of-address').to_return(
+        body: '<p>error</p>',
+        status: 500,
+        headers: { 'Content-Type' => 'text/html; charset=UTF-8' }
+      )
+
+      begin
+        ine =
+          Xhash::OCR.proof_of_address(
+            document_url:
+              'https://kyc-xhash.s3-us-west-2.amazonaws.com/documents/7cd6994d9ad52e8943be1ae00bac60c461430cdf2af6159afa4b9be749706472.png'
+          )
+      rescue => exception
+        expect(exception).to be_a(Xhash::Error)
+      end
+    end
   end
 
   describe '.ine_reverse' do
