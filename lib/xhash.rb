@@ -40,4 +40,12 @@ module Xhash
   def self.api_key=(api_key)
     @api_key = api_key
   end
+
+  def self.timeout
+    @timeout
+  end
+
+  def self.timeout=(timeout)
+    @timeout = timeout
+  end
 end

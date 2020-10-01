@@ -11,7 +11,7 @@ module Xhash
 
       def api_get(url:, headers: {})
         custom_headers = headers.merge(default_headers)
-        response = HTTParty.get(Xhash.api_base + url, headers: custom_headers)
+        response = HTTParty.get(Xhash.api_base + url, headers: custom_headers, timeout: Xhash.timeout)
 
         raise Xhash::Error.new(response) unless response_ok?(response)
 
@@ -28,7 +28,7 @@ module Xhash
         response =
           HTTParty.post(
             Xhash.api_base + url,
-            body: body.to_json, headers: custom_headers
+            body: body.to_json, headers: custom_headers, timeout: Xhash.timeout
           )
 
         raise Xhash::Error.new(response) unless response_ok?(response)
@@ -46,7 +46,7 @@ module Xhash
         response =
           HTTParty.post(
             Xhash.api_base + url,
-            multipart: true, body: body, headers: custom_headers
+            multipart: true, body: body, headers: custom_headers, timeout: Xhash.timeout
           )
 
         raise Xhash::Error.new(response) unless response_ok?(response)
