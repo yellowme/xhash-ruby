@@ -28,7 +28,7 @@ module Xhash
       @timeout
     end
 
-    def self.api_key=(timeout)
+    def self.timeout=(timeout)
       @timeout = timeout
     end
   end
