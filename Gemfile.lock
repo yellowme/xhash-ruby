@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xhash_client (0.3.5)
+    xhash_client (0.3.6)
       httparty (~> 0.16.0)
       json (~> 2.0)
 
